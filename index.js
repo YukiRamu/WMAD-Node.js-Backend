@@ -13,7 +13,8 @@ app.use(basicAuth({
   users: { "admin": "password", "yuki": "password" },
   //challenge: true,
   unauthorizedResponse: () => {
-    return "Unauthorized!!";
+    console.log("I am here in basicAuth config. Unauthorised!!");
+    return "You are unauthorized!!";
   },
   authorizer: (username, password) => {
     console.log(" #1. usernamd and password is", username, password);
@@ -33,13 +34,21 @@ app.use(basicAuth({
 
 //after authorized, send login data to the server
 app.put("/api/login", (req, res) => {
+  //create input data object
   let param = {
     username: req.body.username,
     password: req.body.password
   };
-  console.log("#3. req.auth is ", param);
+
+  console.log("#3. req.body is ", param);
+
+  //Check if the login user is ok to be authorized
   if (param.username === "yuki" && param.password === "password") {
-    res.send("yuki logged in!");
+    res.send({
+      msg: "SUCCESS",
+      username: param.username,
+      password: param.password
+    });
   }
 });
 
@@ -50,7 +59,7 @@ app.listen(port, () => {
 
 
 //================ Templates ==================
-//****************** Use Router ***************** */
+//****************** Use Router : Implement later ***************** */
 // const secureRoute = express.Router();
 // secureRoute.use(basicAuth, (req, res) => {
 
