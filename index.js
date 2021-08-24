@@ -25,7 +25,7 @@ app.use(basicAuth({
     const userMatches = basicAuth.safeCompare(username, admin._username);
     const passwordMatches = basicAuth.safeCompare(password, admin._password);
     if (userMatches && passwordMatches) {
-      //both match
+      //both match -- working
       console.log("#2. Authorized!! both password and username match", userMatches, passwordMatches);
       return userMatches & passwordMatches;
     }
@@ -35,7 +35,7 @@ app.use(basicAuth({
 //after authorized, send login data to the server
 app.put("/api/login", (req, res) => {
   //create input data object
- //console.log(req)
+  //  console.log(req);
   let param = {
     username: req.body.loginUser.username,
     password: req.body.loginUser.password
@@ -45,7 +45,8 @@ app.put("/api/login", (req, res) => {
 
   //Check if the login user is ok to be authorized
   if (param.username === "yuki" && param.password === "password") {
-    res.send({
+    console.log("I am here returning json to frontend");
+    res.json({
       msg: "SUCCESS",
       username: param.username,
       password: param.password
