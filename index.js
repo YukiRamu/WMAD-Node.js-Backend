@@ -46,7 +46,7 @@ app.put("/api/login", (req, res) => {
   //Check if the login user is ok to be authorized
   if (param.username === "yuki" && param.password === "password") {
     console.log("I am here returning json to frontend");
-    res.json({
+    res.send({
       msg: "SUCCESS",
       username: param.username,
       password: param.password
