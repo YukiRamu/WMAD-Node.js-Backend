@@ -84,7 +84,16 @@ const crudDB = () => {
     },
 
     reloadDB() {
-      // reload the database from disk
+      //#1 : check if the db path exists
+      if (checkDirectory(dirPath)) {
+        //#2 : list up db
+        for (let i = 0; i < fs.readdirSync(dirPath).length; i++) {
+          return fs.readdirSync(dirPath)[i], true;
+        }
+      } else {
+        console.error(`Failed to load DB`);
+        return false;
+      }
     },
 
     checkDirectory(dirPath) {
