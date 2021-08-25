@@ -4,6 +4,8 @@ const cors = require('cors');
 const app = express();
 const port = 5000;
 
+//const crudDB = require("./CRUD_Operation");
+
 //avoid cross domain error - when we edit frontend and backend at the same time
 app.use(cors());
 app.use(express.json());
@@ -35,10 +37,10 @@ app.use(basicAuth({
 //after authorized, send login data to the server
 app.put("/api/login", (req, res) => {
   //create input data object
-  //  console.log(req);
+  console.log(req);
   let param = {
-    username: req.body.loginUser.username,
-    password: req.body.loginUser.password
+    username: req.body.username,
+    password: req.body.password
   };
 
   console.log("#3. req.body is ", param);
@@ -46,6 +48,9 @@ app.put("/api/login", (req, res) => {
   //Check if the login user is ok to be authorized
   if (param.username === "yuki" && param.password === "password") {
     console.log("I am here returning json to frontend");
+
+    // db.read() --- read db and do crud operation here
+
     res.send({
       msg: "SUCCESS",
       username: param.username,
