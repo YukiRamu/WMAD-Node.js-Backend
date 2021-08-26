@@ -4,11 +4,104 @@ const cors = require('cors');
 const app = express();
 const port = 5000;
 
+//importing module
 const crudDB = require("./crudDB");
+
+//=========================== Mongo DB ==========
+//importning mongoDB
+const mongodb = require("mongodb");
+const database = require("mongodb").MongoClient;
+const url = " mongodb://localhost:27017/"; //collection name to be added
+
+// const createDBandCollection = (DBname, collectionName) => {
+
+//   //#1 : Create the database
+//   database.connect(url, (error, db) => {
+//     if (error) {
+//       console.error(`Database ${DBname} already exists`);
+//       throw error;
+//     }
+//     console.log(`Database ${DBname} is connected!`);
+//     const dbOutput = db.db(DBname);
+
+//     //Create collection -- multiple collection can be created in one DB
+//     dbOutput.createCollection(collectionName, (error, res) => {
+//       if (error) throw error;
+//       console.log(`Collection ${collectionName} created!`);
+//       console.log(res);
+//     });
+//     db.close();
+//   });
+// };
+// createDBandCollection("UsersDB", "RegisteredUser");
+//=====================================
 
 //avoid cross domain error - when we edit frontend and backend at the same time
 app.use(cors());
 app.use(express.json());
+
+//========== Register user ===========
+const registerUser = (email = undefined, username = undefined, password = undefined) => {
+  database.connect(`${user}UserDB`, (error, db) => {
+    const theDB = db.db("UserDB");
+
+    theDB.createCollection("RegisteredUser", (error, db) => {
+
+    });
+
+    const record = {
+      email: email,
+      username: username,
+      password: password
+    };
+
+    theDB.collection("RegisteredUser").insertOne(record, (error, db) => {
+      if (error) throw error;
+      else {
+        console.log(`${recode} inserted!`);
+      }
+    });
+
+    db.close();
+  });
+};
+
+//========== Login user ===========
+const loginUser = (username = undefined, password = undefined) => {
+  database.connect(`${user}UserDB`, (error, db) => {
+    const theDB = db.db("UserDB");
+
+    theDB.createCollection("RegisteredUser", (error, db) => {
+
+    });
+
+    const target = {
+      username: "yuki",
+      password: "admin123"
+    };
+
+    theDB.collection("RegisteredUser").findOne(target, (error, db) => {
+      if (error) throw error;
+      else {
+        console.log(`${target} found!`);
+      }
+    });
+
+    db.close();
+  });
+};
+
+//router config - register
+app.get("/register", (req, res) => {
+  const userObj = {
+    email: "yuki@gmail.com",
+    username: "yuki",
+    password: "admin123"
+  };
+
+  //call function
+  registerUser(userObj.email, userObj.username, userObj.password);
+});
 
 //setting up basic auth - as soon as we put this, the website become password-protected
 app.use(basicAuth({
