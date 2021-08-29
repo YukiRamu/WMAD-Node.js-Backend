@@ -25,8 +25,7 @@ router.use(basicAuth({
     const userMatches = basicAuth.safeCompare(username, admin._username);
     const passwordMatches = basicAuth.safeCompare(password, admin._password);
     if (userMatches && passwordMatches) {
-      //both match -- working
-      console.log("#2. Authorized!! both password and username match", userMatches, passwordMatches);
+      //both match
       return userMatches & passwordMatches;
     } else {
       console.log("Unauthorized");
@@ -43,11 +42,8 @@ router.put("/api/login", (req, res) => {
     password: req.body.password
   };
 
-  console.log("#3. req.body is ", param);
-
   //Check if the login user is ok to be authorized
   if (param.username === "yuki" && param.password === "password") {
-    console.log("I am here returning json to frontend");
     res.send({
       msg: "SUCCESS",
       username: param.username,
