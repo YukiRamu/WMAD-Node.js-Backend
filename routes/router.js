@@ -36,7 +36,6 @@ router.use(basicAuth({
 //after authorized, send login data to the server
 router.put("/api/login", (req, res) => {
   //create input data object
-  console.log(req);
   let param = {
     username: req.body.username,
     password: req.body.password
